@@ -15,16 +15,16 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin= User::create([
+        $admin = User::create([
             'first_name' => "Admin",
-            'last_name' => "Admin",
-            'phone' => "admin@suz.uz",
-            'email' => "+998973921572",
+            'last_name' => "Admn",
+            'email' => "admin@admin.com",
+            'phone' => "+998973921572",
             'password' => Hash::make('secret123'),
         ]);
 
         $admin->roles()->attach(1);
 
-        User::factory()->count('10')->hasAttached(Role::find(2))->create();
+        User::factory()->count(10)->hasAttached([Role::find(2)])->create();
     }
 }
