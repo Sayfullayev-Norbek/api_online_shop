@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Role;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
 {
@@ -31,7 +32,18 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function roles(){
+    public function roles(): BelongsToMany
+    {
         return $this->belongsToMany(Role::class);
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class);
+    }
+
+    public function hasFavorite($favorite_id): bool
+    {
+        return $this->favorites()->where('product_id', $favorite_id)->exists();
     }
 }
